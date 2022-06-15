@@ -17,8 +17,6 @@ def commands():
 def pre_cook():
     import os, shutil
 
-    print('PRECOOK MOTHERFUCKER')
-
     def download_file(url, local_dir):
         import urllib.request, shutil, os
 
@@ -42,5 +40,3 @@ def pre_cook():
     
     shutil.rmtree(tmp_archive_dir)
     os.remove(fn)
-
-    print("Installing...")

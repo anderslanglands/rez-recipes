@@ -5,6 +5,7 @@ build_requires = ["cmake"]
 
 variants = [["platform-windows", "arch-AMD64"]]
 
+
 def commands():
     env.Imath_ROOT = "{root}"
     env.IMATH_HOME = "{root}"
@@ -16,8 +17,6 @@ def commands():
 
 def pre_cook():
     import os, shutil
-
-    print('PRECOOK MOTHERFUCKER')
 
     def download_file(url, local_dir):
         import urllib.request, shutil, os
@@ -39,8 +38,6 @@ def pre_cook():
     shutil.move(archive_dir, tmp_archive_dir)
     for file in os.listdir(tmp_archive_dir):
         shutil.move(os.path.join(tmp_archive_dir, file), file)
-    
+
     shutil.rmtree(tmp_archive_dir)
     os.remove(fn)
-
-    print("Installing...")
