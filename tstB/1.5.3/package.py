@@ -1,6 +1,6 @@
-name = "tstC"
-version = "1.0.0"
+name = "tstB"
+version = "1.5.3"
 
-requires = ['tstB-2.1']
+requires = ["tstA-1"]
 
 variants = [["platform-linux", "arch-x86_64"], ["platform-windows", "arch-AMD64"]]

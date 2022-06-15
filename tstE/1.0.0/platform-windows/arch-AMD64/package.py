@@ -1,7 +1,7 @@
-name = "tstD"
+name = "tstE"
 version = "1.0.0"
 
-requires = ['tstB-1.5+<2']
+requires = ['tstD-1', 'tstC']
 
 variants = [["platform-windows", "arch-AMD64"]]
 
@@ -28,9 +28,9 @@ def pre_build_commands():
             "cmd",
             "/c",
             "echo",
-            "echo Hello D",
+            "echo Hello E",
             ">",
-            "bin/tstD.bat"
+            "bin/tstE.bat"
         ]
     )
 
