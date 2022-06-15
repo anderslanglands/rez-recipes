@@ -1,5 +1,5 @@
 name = "boost"
-version = "1.70.0"
+version = "1.73.0"
 
 build_requires = ["vs"]
 requires = ["python-<3.8"]
@@ -7,14 +7,14 @@ requires = ["python-<3.8"]
 variants = [["platform-windows", "arch-AMD64"]]
 
 build_command = f"""
-cd {{root}}/boost_1_70_0
-{{root}}/boost_1_70_0/bootstrap.bat && {{root}}/boost_1_70_0/b2 install --prefix={{install_path}} address-model=64 link=shared threading=multi --layout=tagged
+cd {{root}}/boost_1_73_0
+{{root}}/boost_1_73_0/bootstrap.bat && {{root}}/boost_1_73_0/b2 install --prefix={{install_path}} address-model=64 link=shared threading=multi --layout=tagged
 """
 
 def commands():
     env.Boost_ROOT = "{root}"
     env.BOOST_ROOT = "{root}"
-    env.CMAKE_PREFIX_PATH.append('{root}/lib/cmake/Boost-1.70.0')
+    env.CMAKE_PREFIX_PATH.append('{root}/lib/cmake/Boost-1.73.0')
 
 def pre_build_commands():
     import os, shutil
@@ -29,7 +29,7 @@ def pre_build_commands():
         return filename
 
     fn = download_file(
-        f"https://boostorg.jfrog.io/artifactory/main/release/1.70.0/source/boost_1_70_0.tar.bz2",
+        f"https://boostorg.jfrog.io/artifactory/main/release/1.73.0/source/boost_1_73_0.tar.bz2",
         os.getcwd(),
     )
     shutil.unpack_archive(fn)
