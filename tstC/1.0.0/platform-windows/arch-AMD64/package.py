@@ -5,24 +5,15 @@ requires = ['tstB-2.1']
 
 variants = [["platform-windows", "arch-AMD64"]]
 
-build_command = f"""
-xcopy /E {{root}}\\bin {{install_path}}\\bin\\
-"""
+def cook():
+    import os, shutil
 
-def pre_build_commands():
-    import subprocess
+    os.makedirs(f'{root}/bin', exist_ok=True)
+    with open(f"{root}/bin/tstC.bat", "w") as f:
+        f.write("cmd /C echo Hello C!")
 
-    subprocess.run(["cmd", "/c", "mkdir", "bin"])
-    subprocess.run(
-        [
-            "cmd",
-            "/c",
-            "echo",
-            "echo Hello C",
-            ">",
-            "bin/tstC.bat"
-        ]
-    )
+    shutil.copytree(f"{root}/bin", f"{install_path}/bin")
+    shutil.copyfile(f"{root}/package.py", f"{install_root}/package.py")
 
 
 def commands():

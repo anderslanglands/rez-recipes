@@ -3,24 +3,16 @@ version = "1.0.0"
 
 variants = [["platform-windows", "arch-AMD64"]]
 
-build_command = f"""
-xcopy /E {{root}}\\bin {{install_path}}\\bin\\
-"""
+def cook():
+    import os, shutil
 
-def pre_build_commands():
-    import subprocess
+    os.makedirs(f'{root}/bin', exist_ok=True)
+    with open(f"{root}/bin/tstB.bat", "w") as f:
+        f.write("cmd /C echo Hello B!")
 
-    subprocess.run(["cmd", "/c", "mkdir", "bin"])
-    subprocess.run(
-        [
-            "cmd",
-            "/c",
-            "echo",
-            "echo Hello B",
-            ">",
-            "bin/tstB.bat"
-        ]
-    )
+    shutil.copytree(f"{root}/bin", f"{install_path}/bin")
+    shutil.copyfile(f"{root}/package.py", f"{install_root}/package.py")
+
 
 
 def commands():

@@ -9,6 +9,8 @@ def commands():
     env.PYTHONHOME = "{root}"
     env.PYTHONPATH = "{root}"
 
+    env.Python_ROOT = "{root}"
+    env.Python_EXECUTABLE = "{root}/python.exe"
 
 build_command = f"""
 {{root}}\\python-{version}-amd64.exe /passive InstallAllUsers=0 TargetDir={{install_path}} Include_doc=0 Include_launcher=0 Include_test=0

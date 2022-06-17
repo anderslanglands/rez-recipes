@@ -8,6 +8,8 @@ def commands():
     env.PATH.append("{root}")
     env.PYTHONHOME = "{root}"
     env.PYTHONPATH = "{root}"
+    env.Python_ROOT = "{root}"
+    env.Python_EXECUTABLE = "{root}/python.exe"
 
 
 build_command = f"""
