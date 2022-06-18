@@ -1,0 +1,27 @@
+name = "tiff"
+version = "4.3.0"
+
+build_requires = ["cmake"]
+
+variants = [["platform-linux", "arch-x86_64"]]
+
+def commands():
+    env.LIBTIFF_ROOT = "{root}"
+    env.TIFF_ROOT = "{root}"
+    env.LD_LIBRARY_PATH
+
+    if building:
+        env.LDFLAGS.prepend("-L{root}/lib -Wl,-rpath,{root}/lib")
+
+
+def pre_build_commands():
+    env.LDFLAGS.prepend("-Wl,-rpath,$REZ_BUILD_INSTALL_PATH/lib")
+
+
+
+def pre_cook():
+    import subprocess as sp
+    archive = f"libtiff-v{version}.tar.gz"
+    sp.run(["wget", f"https://gitlab.com/libtiff/libtiff/-/archive/v{version}/{archive}"])
+    sp.run(["tar", "xf", archive, "--strip", "1"])
+    

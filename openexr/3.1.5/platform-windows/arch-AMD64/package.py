@@ -18,8 +18,6 @@ def commands():
 def pre_cook():
     import os, shutil
 
-    print('PRECOOK MOTHERFUCKER')
-
     def download_file(url, local_dir):
         import urllib.request, shutil, os
 
