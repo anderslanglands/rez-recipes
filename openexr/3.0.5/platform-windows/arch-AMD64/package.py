@@ -12,7 +12,7 @@ def commands():
     env.OPENEXR_DIR = "{root}"
     env.OPENEXR_LOCATION = "{root}"
     env.CMAKE_PREFIX_PATH.append("{root}/lib/cmake")
-    env.PATH.append("{root}/bin")
+    env.PATH.prepend("{root}/bin")
 
 
 def pre_cook():

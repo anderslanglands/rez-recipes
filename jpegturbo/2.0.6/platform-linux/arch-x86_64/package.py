@@ -8,6 +8,7 @@ variants = [["platform-linux", "arch-x86_64"]]
 
 def commands():
     env.JPEGTurbo_ROOT = "{root}"
+    env.PKG_CONFIG_PATH.prepend("{root}/lib/pkgconfig")
 
     if building:
         env.LDFLAGS.prepend("-L{root}/lib -Wl,-rpath,{root}/lib")

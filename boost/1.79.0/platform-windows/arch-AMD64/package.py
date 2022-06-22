@@ -14,6 +14,7 @@ cd {{root}}/boost_1_79_0
 def commands():
     env.Boost_ROOT = "{root}"
     env.BOOST_ROOT = "{root}"
+    env.PATH.prepend("{root}/bin")
     env.CMAKE_PREFIX_PATH.append('{root}/lib/cmake/Boost-1.79.0')
 
 def pre_build_commands():

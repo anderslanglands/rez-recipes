@@ -14,23 +14,11 @@ cd {{root}}/boost_1_70_0
 def commands():
     env.Boost_ROOT = "{root}"
     env.BOOST_ROOT = "{root}"
-    env.CMAKE_PREFIX_PATH.append('{root}/lib/cmake/Boost-1.70.0')
+    env.CMAKE_PREFIX_PATH.prepend('{root}/lib/cmake/Boost-1.70.0')
+    env.PATH.prepend("{root}/lib")
 
 def pre_build_commands():
-    import os, shutil
-
-    def download_file(url, local_dir):
-        import urllib.request, shutil, os
-
-        print(f"Downloading {url}...")
-        filename = os.path.join(local_dir, os.path.basename(url))
-        with urllib.request.urlopen(url) as resp, open(filename, "wb") as f:
-            shutil.copyfileobj(resp, f)
-        return filename
-
-    fn = download_file(
+    download_and_unpack(
         f"https://boostorg.jfrog.io/artifactory/main/release/1.70.0/source/boost_1_70_0.tar.bz2",
-        os.getcwd(),
     )
-    shutil.unpack_archive(fn)
 

@@ -11,8 +11,8 @@ def commands():
     env.IMATH_HOME = "{root}"
     env.IMATH_DIR = "{root}"
     env.IMATH_LOCATION = "{root}"
+    env.PATH.prepend("{root}/bin")
     env.CMAKE_PREFIX_PATH.append("{root}/lib/cmake")
-    env.PATH.append("{root}/bin")
 
 
 def pre_cook():

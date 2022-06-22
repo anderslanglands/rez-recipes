@@ -8,7 +8,6 @@ variants = [["platform-linux", "arch-x86_64"]]
 def commands():
     env.LIBTIFF_ROOT = "{root}"
     env.TIFF_ROOT = "{root}"
-    env.LD_LIBRARY_PATH
 
     if building:
         env.LDFLAGS.prepend("-L{root}/lib -Wl,-rpath,{root}/lib")
@@ -20,8 +19,6 @@ def pre_build_commands():
 
 
 def pre_cook():
-    import subprocess as sp
     archive = f"libtiff-v{version}.tar.gz"
-    sp.run(["wget", f"https://gitlab.com/libtiff/libtiff/-/archive/v{version}/{archive}"])
-    sp.run(["tar", "xf", archive, "--strip", "1"])
+    download_and_unpack(f"https://gitlab.com/libtiff/libtiff/-/archive/v{version}/{archive}")
     

@@ -8,9 +8,10 @@ variants = [["platform-linux", "arch-x86_64"]]
 
 
 def commands():
-    env.PATH.append("{root}/bin")
-    env.CMAKE_PREFIX_PATH.append("{root}/bin")
-    env.PYTHNONPATH.append("{root}/lib/site-packages")
+    env.PATH.prepend("{root}/bin")
+    env.CMAKE_PREFIX_PATH.prepend("{root}/bin")
+    env.PYTHNONPATH.prepend("{root}/lib/site-packages")
+    env.PKG_CONFIG_PATH.prepend("{root}/bin")
 
     if building:
         env.LDFLAGS.prepend("-L{root}/lib -Wl,-rpath,{root}/lib")

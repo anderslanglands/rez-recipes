@@ -15,6 +15,7 @@ def commands():
     env.Boost_ROOT = "{root}"
     env.BOOST_ROOT = "{root}"
     env.CMAKE_PREFIX_PATH.append('{root}/lib/cmake/Boost-1.76.0')
+    env.PATH.prepend("{root}/bin")
 
 def pre_build_commands():
     import os, shutil

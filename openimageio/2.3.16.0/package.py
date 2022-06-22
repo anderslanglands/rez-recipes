@@ -7,14 +7,14 @@ requires = [
     "opencolorio-2.0+<2.2",
     "tiff-4.3",
     "openjpeg-2.4",
-    "ptex-2.4",
     "jpegturbo-2.0",
     "png-1.6",
-    "raw-0.20",
+    "raw-0.20+<0.22",
     "pugixml-1.11",
     "pybind11-2.8",
     "webp-1.1",
     "zlib-1.2",
+    "ptex-2.4",
     "gif-5.2.1",
 ]
 

@@ -8,15 +8,17 @@ variants = [["platform-windows", "arch-AMD64"]]
 
 
 def commands():
-    env.PATH.append("{root}/bin")
+    env.PATH.prepend("{root}/bin")
     env.CMAKE_PREFIX_PATH.append("{root}/bin")
-    env.PYTHNONPATH.append("{root}/lib/site-packages")
+    env.PYTHNONPATH.prepend("{root}/lib/site-packages")
 
 
-build_args = [
-    "-DPython_ROOT=$env:Python_ROOT -DPython_EXECUTABLE=$env:Python_EXECUTABLE"
+cmake_build_system = "ninja"
+
+build_system_args = [
+    "-DPython_ROOT=$env:Python_ROOT",
+    "-DPython_EXECUTABLE=$env:Python_EXECUTABLE",
 ]
-
 
 def pre_cook():
     import os, shutil

@@ -1,11 +1,13 @@
 name = "ptex"
 version = "2.4.1"
 
+requires = ["zlib-1.2"]
 build_requires = ["cmake"]
 
 variants = [["platform-linux", "arch-x86_64"]]
 
 def commands():
+    env.PATH.prepend("{root}/bin")
     env.Ptex_ROOT = "{root}"
 
     if building:
