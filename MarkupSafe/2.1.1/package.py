@@ -1,15 +1,8 @@
-name = "MarkupSafe"
+name = "markupsafe"
 version = "2.1.1"
 
-requires = ["python"]
+requires = ["python-3.7+"]
+
 variants = [
-    ["platform-windows", "arch-AMD64", "python-3.7"],
-    ["platform-windows", "arch-AMD64", "python-3.9"],
+    ["platform", "arch", "python"],
 ]
-
-build_command = """
-python -m pip install --prefix {install_path}
-"""
-
-def commands():
-    env.PYTHONPATH.prepend("{root}/python")

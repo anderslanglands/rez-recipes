@@ -12,10 +12,11 @@ so we can apply them with this package environment.
 
 """
 
+variants = [['platform-windows', 'arch-AMD64']]
+
 build_command = False
 
 tools = ["cl", "msbuild", "cmake"]
-
 
 
 def commands():
@@ -64,9 +65,9 @@ def commands():
     def find_cmd(version):
         import os
 
-        base_path = f"C:/Program Files (x86)/Microsoft Visual Studio/{this.version}"
+        base_path = f"C:/Program Files (x86)/Microsoft Visual Studio/{version}"
         for edition in ["Enterprise", "Professional", "Community"]:
-            path = os.path.join(base_path, edition, "Common7", "Tools", "VsDevCmd.bat")
+            path = os.path.join(base_path, edition, "VC", "Auxiliary", "Build", "vcvars64.bat")
             if os.path.isfile(path):
                 return path
 
@@ -78,7 +79,6 @@ def commands():
 
     devenv = collect_environment(dev_cmd)
 
-    print("Initialize visual studio developer cmd env..")
     for key, paths in sorted(devenv.items()):
 
         if len(paths.split(os.pathsep)) == 1 and key not in os.environ:
@@ -93,3 +93,20 @@ def commands():
                 env.PATH.append(paths)
             else:
                 env[key].append(paths)
+
+
+def pre_cook():
+    import os
+    def find_cmd(version):
+        import os
+
+        base_path = f"C:/Program Files (x86)/Microsoft Visual Studio/{version}"
+        for edition in ["Enterprise", "Professional", "Community"]:
+            path = os.path.join(base_path, edition, "VC", "Auxiliary", "Build", "vcvars64.bat")
+            if os.path.isfile(path):
+                return path
+
+    path = find_cmd(version)
+    if not os.path.isfile(path):
+        raise RuntimeError("Could not find Visual Studio 2017")
+

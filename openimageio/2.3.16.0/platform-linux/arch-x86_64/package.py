@@ -10,7 +10,6 @@ requires = [
     "jpegturbo-2.0",
     "png-1.6",
     "raw-0.20",
-    "pugixml-1.11",
     "pybind11-2.8",
     "webp-1.1",
     "zlib-1.2",

@@ -10,7 +10,6 @@ requires = [
     "jpegturbo-2.0",
     "png-1.6",
     "raw-0.20+<0.22",
-    "pugixml-1.11",
     "pybind11-2.8",
     "webp-1.1",
     "zlib-1.2",
@@ -20,4 +19,4 @@ requires = [
 
 build_requires = ["cmake"]
 
-variants = [["platform-linux", "arch-x86_64"], ["platform-windows", "arch-AMD64"]]
+variants = [["platform-linux", "arch-x86_64"], ["platform-windows", "arch-AMD64", "vs", "python"]]

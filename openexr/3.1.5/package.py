@@ -2,6 +2,9 @@ name = "openexr"
 version = "3.1.5"
 
 build_requires = ["cmake"]
-requires = ["imath-3.1"]
+requires = ["imath-3.1", "zlib-1.2"]
 
-variants = [["platform-linux", "arch-x86_64"], ["platform-windows", "arch-AMD64"]]
+variants = [
+    ["platform-linux", "arch-x86_64"], 
+    ["platform-windows", "arch-AMD64", "vs"],
+]

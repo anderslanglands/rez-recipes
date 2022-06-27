@@ -13,24 +13,12 @@ def commands():
 
 
 build_command = f"""
-{{root}}\\python-{version}-amd64.exe /passive InstallAllUsers=0 TargetDir={{install_path}} Include_doc=0 Include_launcher=0 Include_test=0
+Move-Item -Path {{root}}/python-{{version}}/* -Destination {{install_path}}
 """
 
 
-def pre_build_commands():
-    import os
-
-    def download_file(url, local_dir):
-        import urllib.request, shutil, os
-
-        print(f"Downloading {url}...")
-        filename = os.path.join(local_dir, os.path.basename(url))
-        with urllib.request.urlopen(url) as resp, open(filename, "wb") as f:
-            shutil.copyfileobj(resp, f)
-        return filename
-
-    _ = download_file(
-        f"https://www.python.org/ftp/python/{this.version}/python-{this.version}-amd64.exe",
-        os.getcwd(),
+def pre_cook():
+    download_and_unpack(
+        f"https://github.com/anderslanglands/rez-recipes/releases/download/python-3.7.9-3.9.12/python-{version}.zip",
+        move_up=False,
     )
-    print("Installing...")
