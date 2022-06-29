@@ -36,9 +36,7 @@ def commands():
 
 
 build_system = "cmake"
-# cmake_build_system = "ninja"
-child_build_args = ["-DBUILD_DOCS=OFF", "-DOIIO_BUILD_TESTS=OFF"]
-
+build_system_args = ["-DBUILD_DOCS=OFF", "-DOIIO_BUILD_TESTS=OFF"]
 
 def pre_cook():
     archive = f"v{version}.tar.gz"
