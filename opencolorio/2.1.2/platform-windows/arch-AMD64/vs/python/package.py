@@ -1,8 +1,8 @@
 name = "opencolorio"
 version = "2.1.2"
 
-requires = ["imath-3.1+<4", "python-3.7+<4"]
-build_requires = ["vs", "cmake-3.15+<4"]
+requires = ["imath-3.1.2+<4", "python-3.7+<4"]
+build_requires = ["vs", "cmake-3.15+<4", "pybind11-2.6.1+"]
 
 @early()
 def variants():
@@ -18,11 +18,11 @@ def commands():
     env.PYTHNONPATH.prepend("{root}/lib/site-packages")
 
 
-cmake_build_system = "ninja"
-
 build_system_args = [
     "-DPython_ROOT=$env:Python_ROOT",
     "-DPython_EXECUTABLE=$env:Python_EXECUTABLE",
+    "-DOCIO_BUILD_TESTS=OFF",
+    "-DOCIO_BUILD_GPU_TESTS=OFF",
 ]
 
 def pre_cook():
