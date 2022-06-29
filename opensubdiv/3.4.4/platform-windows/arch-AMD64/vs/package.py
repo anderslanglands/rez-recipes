@@ -28,6 +28,7 @@ build_system_args = [
     "-DNO_TESTS=ON",
     "-DNO_GLTESTS=ON",
     "-DBUILD_SHARED_LIBS=ON",
+    "-DNO_OPENCL=ON",
 ]
 
 
