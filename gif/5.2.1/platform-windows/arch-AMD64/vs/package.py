@@ -12,7 +12,7 @@ def variants():
 def commands():
     env.GIF_ROOT = "{root}"
     env.GIF_DIR = "{root}"
-    env.PATH.prepend("{root}")
+    env.PATH.prepend("{root}/bin")
 
 build_system = "cmake"
 

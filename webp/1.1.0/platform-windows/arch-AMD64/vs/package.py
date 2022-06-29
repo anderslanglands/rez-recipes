@@ -1,7 +1,8 @@
 name = "webp"
 version = "1.1.0"
 
-build_requires = ["cmake", "vs", "zlib-1.2", "png-1.6", "jpegturbo-2.0", "tiff-4.3"]
+requires = ["zlib-1.2", "png-1.6", "jpegturbo-2.0", "tiff-4.3"]
+build_requires = ["cmake", "vs", ]
 
 
 @early()

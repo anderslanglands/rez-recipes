@@ -25,8 +25,6 @@ def variants():
     variant = ast.literal_eval(os.getenv("REZ_COOK_VARIANT"))
     return [variant]
 
-
-
 def commands():
     env.OpenImageIO_ROOT = "{root}"
     env.OPENIMAGEIO_HOME = "{root}"
@@ -34,6 +32,7 @@ def commands():
     env.OPENIMAGEIO_LOCATION = "{root}"
     env.CMAKE_PREFIX_PATH.append("{root}")
     env.PATH.prepend("{root}/bin")
+    env.PYTHONPATH.prepend("{root}/lib/python3.7/site-packages")
 
 
 build_system = "cmake"

@@ -21,4 +21,4 @@ Move-Item -Path {root}/tbb/* -Destination {install_path}
 
 
 def pre_cook():
-    download_and_unpack(f"https://github.com/oneapi-src/oneTBB/releases/download/v{version}/tbb-{version}-win.zip")
+    download_and_unpack(f"https://github.com/oneapi-src/oneTBB/releases/download/v{version}/tbb-{version}-win.zip", move_up=False)

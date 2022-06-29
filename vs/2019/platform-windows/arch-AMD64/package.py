@@ -107,6 +107,6 @@ def pre_cook():
                 return path
 
     path = find_cmd(version)
-    if not os.path.isfile(path):
-        raise RuntimeError("Could not find Visual Studio 2017")
+    if not path or not os.path.isfile(path):
+        raise RuntimeError(f"Could not find Visual Studio {version}")
 

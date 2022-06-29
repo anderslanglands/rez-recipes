@@ -9,9 +9,8 @@ def commands():
     env.PATH.prepend("{root}/bin")
 
 build_command = """
-echo $env:REZ_BUILD_REQUIRES
-echo $env:REZ_BUILD_VARIANT_REQUIRES
+Move-Item -Path {root}/cmake-3.15.6-win64-x64/* -Destination {install_path}
 """
 
 def pre_cook():
-    download_and_unpack(f"https://github.com/Kitware/CMake/archive/refs/tags/v{version}.tar.gz")
+    download_and_unpack(f"https://cmake.org/files/v3.15/cmake-3.15.6-win64-x64.zip", move_up=False)

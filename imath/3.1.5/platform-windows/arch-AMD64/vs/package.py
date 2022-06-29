@@ -6,8 +6,8 @@ build_requires = ["cmake", "vs"]
 @early()
 def variants():
     import os, ast
-    variant = ast.literal_eval(os.getenv("REZ_COOK_VARIANT"))
-    return [variant]
+    cook_variant = ast.literal_eval(os.getenv("REZ_COOK_VARIANT"))
+    return [cook_variant]
 
 def commands():
     env.Imath_ROOT = "{root}"

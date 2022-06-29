@@ -1,10 +1,16 @@
 name = "raw"
-version = "0.21.0a1"
+version = "0.21.0"
 
 requires = ["jpegturbo", "zlib-1.2"]
 build_requires = ["cmake", "vs"]
 
-variants = [["platform-windows", "arch-AMD64"]]
+
+@early()
+def variants():
+    import os, ast
+
+    variant = ast.literal_eval(os.getenv("REZ_COOK_VARIANT"))
+    return [variant]
 
 
 def commands():
@@ -30,11 +36,11 @@ def pre_cook():
             "--depth",
             "1",
             "-b",
-            f"v{version}",
+            f"v0.21.0a1",
             "https://github.com/anderslanglands/raw.git",
             "_clone",
         ]
     )
-    
+
     for f in os.listdir("_clone"):
         shutil.move(os.path.join("_clone", f), f)
