@@ -16,8 +16,6 @@ config_args = [
     "-DCMAKE_INSTALL_PREFIX={install_path}",
     "-DCMAKE_MODULE_PATH=$env:CMAKE_MODULE_PATH",
     "-DCMAKE_BUILD_TYPE=Release",
-    # "-G", "$env:REZ_CMAKE_GENERATOR",
-    # "-A", "x64",
     " -G Ninja",
     "-DTBB_ROOT=$env:TBB_ROOT",
 ]

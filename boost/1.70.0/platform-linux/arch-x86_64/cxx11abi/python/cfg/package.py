@@ -1,9 +1,8 @@
 name = "boost"
 version = "1.70.0"
 
-build_requires = ["vs"]
+build_requires = ["cmake"]
 requires = ["python-<3.8"]
-
 
 @early()
 def variants():
@@ -14,16 +13,16 @@ def variants():
 
 
 build_command = f"""
-cd {{root}}
-{{root}}/bootstrap.bat && {{root}}/b2 install --prefix={{install_path}} address-model=64 link=shared threading=multi --layout=system variant=release
+cd {{root}} && \
+./bootstrap.sh --prefix={{install_path}} && \
+./b2 install --prefix={{install_path}} address-model=64 link=shared threading=multi --layout=system variant=$REZ_BUILD_CONFIG
 """
-
 
 def commands():
     env.Boost_ROOT = "{root}"
     env.BOOST_ROOT = "{root}"
     env.CMAKE_PREFIX_PATH.prepend("{root}")
-    env.PATH.prepend("{root}/lib")
+    env.LD_LIBRARY_PATH.prepend("{root}/lib")
 
 
 def pre_cook():
