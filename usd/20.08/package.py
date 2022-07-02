@@ -2,8 +2,8 @@ name = "usd"
 version = "20.08"
 
 requires = [
-    "openimageio-2.3",
-    "opensubdiv-3.4",
+    "oiio-2.3",
+    "osd-3.4",
     "tbb-2020",
     "glew-2.1",
     "jinja2-3.1",
