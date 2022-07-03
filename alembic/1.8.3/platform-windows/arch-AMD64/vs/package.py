@@ -2,22 +2,44 @@ name = "alembic"
 version = "1.8.3"
 
 requires = ["imath"]
-build_requires = ["cmake", "vs"]
+
+@early()
+def build_requires():
+    import platform
+
+    if platform.system() == "Windows":
+        return ["cmake", "vs"]
+    else:
+        return ["cmake"]
 
 
 @early()
 def variants():
     import os, ast
 
-    variant = ast.literal_eval(os.getenv("REZ_COOK_VARIANT"))
-    return [variant]
+    cook_variant = os.getenv("REZ_COOK_VARIANT")
+    if cook_variant:
+        # If we're building the package, we want to use the variant supplied to us
+        return [ast.literal_eval(cook_variant)]
+    else:
+        # Otherwise tell rez-cook what variants we are capable of building
+        return [
+            ["platform-linux", "arch-x86_64", "cxx11abi", "cfg"],
+            ["platform-windows", "arch-AMD64", "vs", "cfg"],
+        ]
+
 
 
 def commands():
+    import platform
+
     env.ALEMBIC_ROOT = "{root}"
     env.ALEMBIC_DIR = "{root}"
     env.CMAKE_PREFIX_PATH.prepend("{root}")
     env.PATH.prepend("{root}/bin")
+
+    if platform.system() == "Linux":
+        env.LD_LIBRARY_PATH.prepend("{root}/lib")
 
 
 config_args = [
