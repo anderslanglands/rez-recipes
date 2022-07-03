@@ -39,17 +39,25 @@ def commands():
         env.LD_LIBRARY_PATH.prepend("{root}/lib")
 
 
+def env(var: str):
+    import platform
+    if platform.system() == "Windows":
+        return f"$env:{var}"
+    else:
+        return f"${var}"
+
 config_args = [
     "cmake",
     "{root}",
     "-DCMAKE_INSTALL_PREFIX={install_path}",
-    "-DCMAKE_MODULE_PATH=$env:CMAKE_MODULE_PATH",
-    "-DCMAKE_BUILD_TYPE=Release",
+    f'-DCMAKE_MODULE_PATH="{env("CMAKE_MODULE_PATH")}"',
+    f'-DCMAKE_BUILD_TYPE="{env("REZ_BUILD_CONFIG")}"',
     " -G Ninja",
 ]
 
 build_command = (
-    " ".join(config_args) + " && cmake --build . --target install --config Release"
+    " ".join(config_args)
+    + f" && cmake --build . --target install --config {env('REZ_BUILD_CONFIG')}"
 )
 
 
