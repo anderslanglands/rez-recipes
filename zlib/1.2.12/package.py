@@ -31,10 +31,7 @@ def variants():
 def commands():
     import platform
 
-    env.Imath_ROOT = "{root}"
-    env.IMATH_HOME = "{root}"
-    env.IMATH_DIR = "{root}"
-    env.IMATH_LOCATION = "{root}"
+    env.ZLIB_ROOT = "{root}"
     env.CMAKE_PREFIX_PATH.append("{root}")
     env.PATH.prepend("{root}/bin")
 

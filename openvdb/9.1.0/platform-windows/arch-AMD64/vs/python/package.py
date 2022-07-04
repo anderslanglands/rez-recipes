@@ -1,23 +1,61 @@
 name = "openvdb"
 version = "9.1.0"
 
-build_requires = ["cmake", "vs"]
 requires = ["openexr", "zlib", "boost-1.70+", "tbb", "python", "numpy", "blosc-1.5+"]
+
+def commands():
+    env.OpenVDB_ROOT = "{root}"
+    env.CMAKE_PREFIX_PATH.append("{root}")
+    env.PATH.prepend("{root}/bin")
+    env.PYTHONPATH.prepend("{root}/lib/python3.7/site-packages")
+
+    import platform
+
+    if platform.system() == "Linux":
+        env.LD_LIBRARY_PATH.prepend("{root}/bin")
+
+
+@early()
+def build_requires():
+    import platform
+
+    if platform.system() == "Windows":
+        return ["cmake", "vs"]
+    else:
+        return ["cmake"]
+
 
 @early()
 def variants():
     import os, ast
-    variant = ast.literal_eval(os.getenv("REZ_COOK_VARIANT"))
-    return [variant]
+
+    cook_variant = os.getenv("REZ_COOK_VARIANT")
+    if cook_variant:
+        # If we're building the package, we want to use the variant supplied to us
+        return [ast.literal_eval(cook_variant)]
+    else:
+        # Otherwise tell rez-cook what variants we are capable of building
+        return [
+            ["platform-linux", "arch-x86_64", "cxx11abi", "python", "cfg"],
+            ["platform-windows", "arch-AMD64", "vs", "python", "cfg"],
+        ]
+
+def env(var: str):
+    import platform
+
+    if platform.system() == "Windows":
+        return f"$env:{var}"
+    else:
+        return f"${var}"
 
 config_args = [
     "cmake",
     "{root}",
     "-DCMAKE_INSTALL_PREFIX={install_path}",
-    "-DCMAKE_MODULE_PATH=$env:CMAKE_MODULE_PATH",
-    "-DCMAKE_BUILD_TYPE=Release",
+    f'-DCMAKE_MODULE_PATH="{env("CMAKE_MODULE_PATH")}"',
+    f'-DCMAKE_BUILD_TYPE="{env("REZ_BUILD_CONFIG")}"',
     " -G Ninja",
-    "-DTBB_ROOT=$env:TBB_ROOT",
+    f'-DTBB_ROOT="{env("TBB_ROOT")}"',
 ]
 
 build_command = " ".join(config_args) + " && cmake --build . --target install --config Release --parallel $env:REZ_BUILD_THREAD_COUNT"

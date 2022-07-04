@@ -34,6 +34,9 @@ def commands():
     env.PYTHONHOME = "{root}"
     env.Python_ROOT = "{root}"
 
+    env.PYTHON_VERSION = "{version}"
+    env.PYTHON_MAJMIN_VERSION = ".".join(f"{version}".split(".")[:2])
+
     if platform.system() == "Windows":
         env.PATH.append("{root}")
         env.PYTHONPATH = "{root}"
@@ -59,22 +62,6 @@ def pre_cook():
         )
 
 
-def pre_build_command():
-    import platform
-
-    if platform.system() == "Linux":
-        env.CFLAGS = " ".join(
-            [
-                "-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2",
-                "-fexceptions -fstack-protector-strong",
-                "--param=ssp-buffer-size=4 -grecord-gcc-switches",
-                "-m64 -mtune=generic -D_GNU_SOURCE",
-                "-fPIC -fwrapv $CFLAGS",
-            ]
-        )
-        env.LDFLAGS = "-Wl,-rpath,$REZ_BUILD_INSTALL_PATH/lib $LDFLAGS"
-
-
 @early()
 def build_command():
     import platform
@@ -83,11 +70,11 @@ def build_command():
         return f'Move-Item -Path "$env:REZ_BUILD_SOURCE_PATH/python-{version}/*" -Destination "$env:REZ_BUILD_INSTALL_PATH"'
     else:
         return f"""
-cd $REZ_BUILD_SOURCE_PATH && \
-./configure  --prefix=$REZ_BUILD_INSTALL_PATH \
-    --enable-optimizations --enable-ipv6 --enable-shared \
-    --with-dbmliborder=gdbm:ndbm:bdb --with-system-expat \
-    --with-system-ffi --with-ensurepip --with-computed-gotos=yes && \
-make install -j$REZ_BUILD_THREAD_COUNT && \
-ln -s $REZ_BUILD_INSTALL_PATH/bin/python3 $REZ_BUILD_INSTALL_PATH/bin/python
-"""
+            cd $REZ_BUILD_SOURCE_PATH && \
+            ./configure  --prefix=$REZ_BUILD_INSTALL_PATH \
+                --enable-optimizations --enable-ipv6 --enable-shared \
+                --with-dbmliborder=gdbm:ndbm:bdb --with-system-expat \
+                --with-system-ffi --with-ensurepip --with-computed-gotos=yes && \
+            make install -j$REZ_BUILD_THREAD_COUNT && \
+            ln -s $REZ_BUILD_INSTALL_PATH/bin/python3 $REZ_BUILD_INSTALL_PATH/bin/python
+            """

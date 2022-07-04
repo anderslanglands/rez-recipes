@@ -27,6 +27,8 @@ def commands():
 
     import subprocess
 
+    env.REZ_CMAKE_GENERATOR = "Visual Studio 16 2019"
+
     def collect_environment(cmd):
         # Return the new resulting environment variables from the command
         result = subprocess.check_output("%s & set" % cmd).decode('utf-8')
