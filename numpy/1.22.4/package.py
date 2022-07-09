@@ -1,5 +1,5 @@
 name = "numpy"
-version = "1.21.6"
+version = "1.22.4"
 
 requires = ["python-3.9+"]
 

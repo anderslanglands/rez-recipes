@@ -1,7 +1,7 @@
 name = "openvdb"
-version = "9.1.0"
+version = "8.2.0"
 
-requires = ["openexr", "zlib", "boost-1.70+", "tbb", "python", "numpy", "blosc-1.5+"]
+requires = ["openexr", "zlib", "boost-1.70+", "tbb", "python", "numpy", "blosc-1.5"]
 
 def commands():
     env.OpenVDB_ROOT = "{root}"

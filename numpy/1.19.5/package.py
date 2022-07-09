@@ -1,7 +1,7 @@
 name = "numpy"
-version = "1.21.6"
+version = "1.19.5"
 
-requires = ["python-3.9+"]
+requires = ["python-3.7+"]
 
 
 @early()

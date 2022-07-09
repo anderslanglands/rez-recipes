@@ -78,4 +78,72 @@ def build_command():
 
 
 def pre_cook():
-    fetch_repository("https://github.com/anderslanglands/ptex.git")
+    download_and_unpack(f"https://github.com/wdas/ptex/archive/refs/tags/v{version}.zip")
+    patch(
+"""
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 4c7e0c3..a933eea 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -33,9 +33,7 @@ enable_testing()
+ # Setup platform-specific threading flags.
+ find_package(Threads REQUIRED)
+ 
+-# Use pkg-config to create a PkgConfig::Ptex_ZLIB imported target
+-find_package(PkgConfig REQUIRED)
+-pkg_checK_modules(Ptex_ZLIB REQUIRED zlib IMPORTED_TARGET)
++find_package(ZLIB REQUIRED)
+ 
+ 
+ if (NOT DEFINED PTEX_SHA)
+diff --git a/src/build/ptex-config.cmake b/src/build/ptex-config.cmake
+index dfe2851..5e63f07 100644
+--- a/src/build/ptex-config.cmake
++++ b/src/build/ptex-config.cmake
+@@ -8,9 +8,7 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
+ 
+ find_dependency(Threads REQUIRED)
+ 
+-# Provide PkgConfig::ZLIB to downstream dependents
+-find_dependency(PkgConfig REQUIRED)
+-pkg_checK_modules(Ptex_ZLIB REQUIRED zlib IMPORTED_TARGET)
++find_package(ZLIB REQUIRED)
+ 
+ set_and_check(Ptex_DIR @PACKAGE_CMAKE_INSTALL_PREFIX@)
+ set_and_check(Ptex_LIBRARY_DIRS @PACKAGE_CMAKE_INSTALL_LIBDIR@)
+diff --git a/src/ptex/CMakeLists.txt b/src/ptex/CMakeLists.txt
+index e2e1bfd..4dfe372 100644
+--- a/src/ptex/CMakeLists.txt
++++ b/src/ptex/CMakeLists.txt
+@@ -23,7 +23,7 @@ if(PTEX_BUILD_STATIC_LIBS)
+     PRIVATE
+         ${CMAKE_CURRENT_SOURCE_DIR})
+     target_link_libraries(Ptex_static
+-        PUBLIC Threads::Threads PkgConfig::Ptex_ZLIB)
++        PUBLIC Threads::Threads ZLIB::ZLIB)
+     install(TARGETS Ptex_static EXPORT Ptex DESTINATION ${CMAKE_INSTALL_LIBDIR})
+ endif()
+ 
+@@ -39,7 +39,7 @@ if(PTEX_BUILD_SHARED_LIBS)
+             ${CMAKE_CURRENT_SOURCE_DIR})
+     target_compile_definitions(Ptex_dynamic PRIVATE PTEX_EXPORTS)
+     target_link_libraries(Ptex_dynamic
+-        PUBLIC Threads::Threads PkgConfig::Ptex_ZLIB)
++        PUBLIC Threads::Threads ZLIB::ZLIB)
+     install(TARGETS Ptex_dynamic EXPORT Ptex DESTINATION ${CMAKE_INSTALL_LIBDIR})
+ endif()
+ 
+diff --git a/src/utils/CMakeLists.txt b/src/utils/CMakeLists.txt
+index d0295cb..f6bd83d 100644
+--- a/src/utils/CMakeLists.txt
++++ b/src/utils/CMakeLists.txt
+@@ -4,6 +4,6 @@ if (PTEX_BUILD_STATIC_LIBS)
+     add_definitions(-DPTEX_STATIC)
+ endif()
+ 
+-target_link_libraries(ptxinfo ${PTEX_LIBRARY} PkgConfig::Ptex_ZLIB)
++target_link_libraries(ptxinfo ${PTEX_LIBRARY} ZLIB::ZLIB)
+ 
+ install(TARGETS ptxinfo DESTINATION ${CMAKE_INSTALL_BINDIR})
+"""
+    )

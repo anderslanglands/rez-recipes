@@ -1,7 +1,7 @@
 name = "ocio"
-version = "2.2.0"
+version = "2.0.4"
 
-requires = ["openexr-2.4|3.1.2+", "python-3.7+"]
+requires = ["openexr-2.4|3", "python-3.7+"]
 
 
 @early()
@@ -72,27 +72,19 @@ build_command = (
 
 
 def pre_cook():
-    fetch_repository("https://github.com/AcademySoftwareFoundation/OpenColorIO.git")
+    download_and_unpack(f"https://github.com/AcademySoftwareFoundation/OpenColorIO/archive/refs/tags/v{version}.zip")
 
     # patch to fix build type and missing cxxflags in built deps
     patch(
-"""diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a8b4a3cd..25d7a13b 100755
+"""
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c54dbbf6..984b1f87 100755
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -83,24 +83,7 @@ if(NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
-     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
- endif()
-
--# List all the valid build types.
--
--if(NOT DEFINED CMAKE_CONFIGURATION_TYPES)
--    set(CMAKE_CONFIGURATION_TYPES "Debug;Release;MinSizeRel;RelWithDebInfo" CACHE STRING "" FORCE)
--    mark_as_advanced(CMAKE_CONFIGURATION_TYPES)
--endif()
--
--set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
--
+@@ -79,16 +79,6 @@ endif()
+ 
+ set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+ 
 -# Is that a valid build type?
 -
 -if(NOT "${CMAKE_BUILD_TYPE}" IN_LIST CMAKE_CONFIGURATION_TYPES)
@@ -102,33 +94,34 @@ index a8b4a3cd..25d7a13b 100755
 -endif()
 -
 -# Is that in debug mode?
-+# Are we in debug mode?
-
+-
  set(_BUILD_TYPE_DEBUG OFF)
  if(CMAKE_BUILD_TYPE MATCHES "[Dd][Ee][Bb][Uu][Gg]")
+     set(_BUILD_TYPE_DEBUG ON)
 diff --git a/share/cmake/modules/Findpystring.cmake b/share/cmake/modules/Findpystring.cmake
-index 702ac1e8..71692bd4 100644
+index 5975da43..97784fc9 100644
 --- a/share/cmake/modules/Findpystring.cmake
 +++ b/share/cmake/modules/Findpystring.cmake
-@@ -86,6 +86,7 @@ if(NOT pystring_FOUND AND NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL NONE)
+@@ -87,6 +87,7 @@ if(NOT pystring_FOUND)
          endif()
-
+ 
          string(STRIP "${pystring_CXX_FLAGS}" pystring_CXX_FLAGS)
 +        set(pystring_CXX_FLAGS " ${pystring_CXX_FLAGS} $ENV{CXXFLAGS}")
-
+ 
          set(pystring_CMAKE_ARGS
              ${pystring_CMAKE_ARGS}
 diff --git a/share/cmake/modules/Findyaml-cpp.cmake b/share/cmake/modules/Findyaml-cpp.cmake
-index 023e14fc..4081cf29 100644
+index e0de62e2..1bdc5f4a 100644
 --- a/share/cmake/modules/Findyaml-cpp.cmake
 +++ b/share/cmake/modules/Findyaml-cpp.cmake
-@@ -165,6 +165,7 @@ if(NOT yaml-cpp_FOUND AND NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL NONE)
+@@ -172,6 +172,7 @@ if(NOT yaml-cpp_FOUND)
          endif()
-
+ 
          string(STRIP "${yaml-cpp_CXX_FLAGS}" yaml-cpp_CXX_FLAGS)
 +        set(yaml-cpp_CXX_FLAGS " ${yaml-cpp_CXX_FLAGS} $ENV{CXXFLAGS}")
-
+ 
          set(yaml-cpp_CMAKE_ARGS
              ${yaml-cpp_CMAKE_ARGS}
+
 """
     )

@@ -10,11 +10,13 @@ requires = [
     "jpegturbo-2.0",
     "png-1.6",
     "raw-0.21",
+    "python",
     "pybind11-2.8",
     "webp-1.1",
     "zlib-1.2",
     "ptex-2.4",
     "gif-5.2.1",
+    "tbb",
 ]
 
 
@@ -56,6 +58,14 @@ def env(var: str):
 def commands():
     import os
 
+    def envvar(var: str):
+        import platform
+
+        if platform.system() == "Windows":
+            return f"$env:{var}"
+        else:
+            return f"${var}"
+
     env.OpenImageIO_ROOT = "{root}"
     env.OPENIMAGEIO_HOME = "{root}"
     env.OPENIMAGEIO_DIR = "{root}"
@@ -63,7 +73,7 @@ def commands():
     env.CMAKE_PREFIX_PATH.append("{root}")
     env.PATH.prepend("{root}/bin")
 
-    env.PYTHONPATH.prepend(f"{{root}}/lib/python{env('PYTHON_MAJMIN_VERSION')}/site-packages")
+    env.PYTHONPATH.prepend(f"{{root}}/lib/python{envvar('PYTHON_MAJMIN_VERSION')}/site-packages")
 
     import platform
 
@@ -80,8 +90,9 @@ config_args = [
     f'-DCMAKE_BUILD_TYPE="{env("REZ_BUILD_CONFIG")}"',
     "-DBUILD_DOCS=OFF",
     "-DOIIO_BUILD_TESTS=OFF",
+    "-DBUILD_TESTING=OFF",
     f'-DPython_ROOT="{env("Python_ROOT")}"',
-    "-DFIND_QUIETLY=OFF",
+    f'-DPython_EXECUTABLE="{env("Python_EXECUTABLE")}"',
     " -G Ninja",
 ]
 

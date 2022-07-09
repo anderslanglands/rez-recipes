@@ -79,6 +79,7 @@ def build_command():
                 --with-system-expat \
                 --with-system-ffi \
                 --with-ensurepip \
+                --without-pymalloc \
                 --with-computed-gotos=yes && \
             make install -j$REZ_BUILD_THREAD_COUNT && \
             ln -s $REZ_BUILD_INSTALL_PATH/bin/python3 $REZ_BUILD_INSTALL_PATH/bin/python && \

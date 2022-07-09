@@ -1,7 +1,7 @@
 name = "osd"
 version = "3.4.4"
 
-requires = ["imath-3.1", "ptex-2.4", "zlib-1.2"]
+requires = ["imath-3", "ptex-2.4", "zlib-1.2"]
 
 
 @early()

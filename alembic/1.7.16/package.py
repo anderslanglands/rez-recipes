@@ -1,7 +1,7 @@
 name = "alembic"
-version = "1.8.3"
+version = "1.7.16"
 
-requires = ["imath"]
+requires = ["openexr-2.4+<3"]
 
 @early()
 def build_requires():
