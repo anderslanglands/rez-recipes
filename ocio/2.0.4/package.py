@@ -35,7 +35,8 @@ def commands():
     env.OpenColorIO_ROOT = "{root}"
     env.PATH.prepend("{root}/bin")
     env.CMAKE_PREFIX_PATH.append("{root}/bin")
-    env.PYTHNONPATH.prepend("{root}/lib/site-packages")
+    env.PYTHONPATH.prepend("{root}/lib/site-packages")
+    env.OCIO_LOAD_DLLS_FROM_PATH = "1"
 
     import platform
 
@@ -72,7 +73,7 @@ build_command = (
 
 
 def pre_cook():
-    download_and_unpack(f"https://github.com/AcademySoftwareFoundation/OpenColorIO/archive/refs/tags/v{version}.zip")
+    fetch_repository("https://github.com/anderslanglands/OpenColorIO.git", branch="v2.0.4-rez-recipe")
 
     # patch to fix build type and missing cxxflags in built deps
     patch(
