@@ -63,6 +63,6 @@ def build_command():
     import platform
 
     if platform.system() == "Windows":
-        return f"cd $env:REZ_BUILD_SOURCE_PATH && ./bootstrap.bat && ./b2 install --prefix=\"$env:REZ_BUILD_INSTALL_PATH\" address-model=64 link=shared threading=multi --layout=system variant=\"$env:REZ_BUILD_CONFIG\" -d0"
+        return f"cd $env:REZ_BUILD_SOURCE_PATH && ./bootstrap.bat && ./b2 install --prefix=\"$env:REZ_BUILD_INSTALL_PATH\" address-model=64 link=shared --layout=system threading=multi variant=\"$env:REZ_BUILD_CONFIG\" -d0"
     else:
         return f"cd $REZ_BUILD_SOURCE_PATH && ./bootstrap.sh --with-python=$Python_EXECUTABLE && ./b2 install --prefix=$REZ_BUILD_INSTALL_PATH address-model=64 link=shared threading=multi --layout=system variant=$REZ_BUILD_CONFIG -j$REZ_BUILD_THREAD_COUNT -d0 cxxflags=$CXXFLAGS"
