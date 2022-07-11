@@ -51,7 +51,8 @@ config_args = [
     f'-DCMAKE_MODULE_PATH="{env("CMAKE_MODULE_PATH")}"',
     f'-DCMAKE_BUILD_TYPE="{env("REZ_BUILD_CONFIG")}"',
     "-DPYBIND11_TEST=OFF",
-    f'-DPYTHON_EXECUTABLE={env("Python_EXECUTABLE")}',
+    f'-DPYTHON_EXECUTABLE="{env("Python_EXECUTABLE")}"',
+    f'-DPYTHON_ROOT={env("Python_ROOT")}',
     " -G Ninja",
 ]
 
