@@ -1,7 +1,7 @@
 name = "pyside2"
 version = "5.15.2.1"
 
-requires = ["python-3.7+", "shiboken2-5.15"]
+requires = ["python-3.7+"]
 
 
 @early()
@@ -30,7 +30,7 @@ def env(var: str):
 
 
 build_command = f"""
-rez-env python-{env('PYTHON_VERSION')} -- python -m pip install {name}=={version} --target="{{install_path}}" --no-deps --use-pep517
+rez-env python-{env('PYTHON_VERSION')} -- python -m pip install {name}=={version} --target="{{install_path}}" --use-pep517
 """
 
 
