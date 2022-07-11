@@ -39,13 +39,13 @@ def commands():
     
     if platform.system() == "Windows":
         env.PATH.append("{root}")
-        env.PYTHONPATH = "{root}"
+        env.PYTHONPATH.prepend("{root}")
         env.Python_EXECUTABLE = "{root}/python.exe"
     else:
         env.PATH.append("{root}/bin")
         env.LD_LIBRARY_PATH.prepend("{root}/lib")
         env.Python_EXECUTABLE = "{root}/bin/python3"
-        env.PYTHONPATH = "{root}/lib/python3.9"
+        env.PYTHONPATH.prepend("{root}/lib/python3.9")
 
 
 def pre_cook():
