@@ -1,5 +1,5 @@
 name = "usd"
-version = "20.08"
+version = "21.08"
 
 requires = [
     "oiio",
@@ -10,7 +10,7 @@ requires = [
     "pyside2-5.15",
     "pyopengl-3.1",
     "numpy",
-    "python-<3.8",
+    "python",
 ]
 
 
@@ -77,6 +77,9 @@ config_args = [
     f'-DPython_ROOT="{env("Python_ROOT")}"',
     "-DPXR_BUILD_DOCUMENTATION=FALSE",
     "-DPXR_BUILD_TESTS=FALSE",
+    # Fix for boost inserting the wrong library names into the libs with 
+    # --layout=system...
+    f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB {env("CXXFLAGS")}"',
     " -G Ninja",
 ]
 

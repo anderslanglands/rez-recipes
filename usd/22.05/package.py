@@ -1,5 +1,5 @@
 name = "usd"
-version = "20.08"
+version = "22.05"
 
 requires = [
     "oiio",
@@ -10,7 +10,7 @@ requires = [
     "pyside2-5.15",
     "pyopengl-3.1",
     "numpy",
-    "python-<3.8",
+    "python",
 ]
 
 
@@ -77,6 +77,9 @@ config_args = [
     f'-DPython_ROOT="{env("Python_ROOT")}"',
     "-DPXR_BUILD_DOCUMENTATION=FALSE",
     "-DPXR_BUILD_TESTS=FALSE",
+    # Fix for boost inserting the wrong library names into the libs with 
+    # --layout=system...
+    f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB {env("CXXFLAGS")}"',
     " -G Ninja",
 ]
 
@@ -87,6 +90,6 @@ build_command = (
 
 
 def pre_cook():
-    download_and_unpack(
-        f"https://github.com/PixarAnimationStudios/USD/archive/refs/tags/v{version}.tar.gz"
+    fetch_repository(
+        "https://github.com/PixarAnimationStudios/USD.git", branch=f"v{version}"
     )
