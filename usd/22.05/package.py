@@ -51,6 +51,7 @@ def commands():
 
     if platform.system() == "Linux":
         env.LD_LIBRARY_PATH.prepend("{root}/bin")
+        env.PYOPENGL_PLATFORM = "glx"
 
 
 def env(var: str):
