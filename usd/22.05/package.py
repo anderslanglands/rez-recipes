@@ -2,7 +2,10 @@ name = "usd"
 version = "22.05"
 
 requires = [
-    "oiio",
+    "openexr-3",
+    "boost-1.70+",
+    "ocio-2",
+    "oiio-2.3",
     "osd-3.4",
     "tbb-2020",
     "glew-2.1",
@@ -12,6 +15,8 @@ requires = [
     "numpy",
     "python",
 ]
+
+hashed_variants = True
 
 
 @early()
@@ -34,9 +39,11 @@ def variants():
         return [ast.literal_eval(cook_variant)]
     else:
         # Otherwise tell rez-cook what variants we are capable of building
-        return [
-            ["platform-linux", "arch-x86_64", "cxx11abi", "python"],
-            ["platform-windows", "arch-AMD64", "vs", "python"],
+        req = ["cfg", "boost", "tbb", "openexr", "ocio", "oiio", "python", "osd", "ptex"]
+        return [x + req for x in [
+                ["platform-linux", "arch-x86_64", "cxx11abi"],
+                ["platform-windows", "arch-AMD64", "vs"],
+            ]
         ]
 
 

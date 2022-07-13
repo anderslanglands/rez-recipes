@@ -19,6 +19,8 @@ requires = [
     "tbb",
 ]
 
+hashed_variants = True
+
 
 @early()
 def build_requires():
@@ -40,9 +42,11 @@ def variants():
         return [ast.literal_eval(cook_variant)]
     else:
         # Otherwise tell rez-cook what variants we are capable of building
-        return [
-            ["platform-linux", "arch-x86_64", "cxx11abi", "python", "cfg"],
-            ["platform-windows", "arch-AMD64", "vs", "python", "cfg"],
+        req = ["cfg", "boost", "tbb", "openexr", "ocio", "python", "ptex"]
+        return [x + req for x in [
+                ["platform-linux", "arch-x86_64", "cxx11abi"],
+                ["platform-windows", "arch-AMD64", "vs"],
+            ]
         ]
 
 

@@ -1,7 +1,6 @@
 name = "blosc"
 version = "1.21.1"
 
-
 @early()
 def build_requires():
     import platform

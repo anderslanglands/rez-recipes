@@ -39,7 +39,7 @@ def variants():
     else:
         # Otherwise tell rez-cook what variants we are capable of building
         return [
-            ["platform-linux", "arch-x86_64", "cxx11abi-0", "python-3.7", "cfg"],
-            ["platform-windows", "arch-AMD64", "vs-2017", "python-3.7", "cfg"],
+            ["platform-linux", "arch-x86_64", "cfg"],
+            ["platform-windows", "arch-AMD64", "cfg"],
         ]
 

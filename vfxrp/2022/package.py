@@ -26,3 +26,19 @@ def requires():
         req += ["cxx11abi-0"]
 
     return req
+
+@early()
+def variants():
+    import os, ast
+
+    cook_variant = os.getenv("REZ_COOK_VARIANT")
+    if cook_variant:
+        # If we're building the package, we want to use the variant supplied to us
+        return [ast.literal_eval(cook_variant)]
+    else:
+        # Otherwise tell rez-cook what variants we are capable of building
+        return [
+            ["platform-linux", "arch-x86_64", "cfg"],
+            ["platform-windows", "arch-AMD64", "cfg"],
+        ]
+

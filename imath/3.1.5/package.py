@@ -1,7 +1,6 @@
 name = "imath"
 version = "3.1.5"
 
-
 @early()
 def build_requires():
     import platform
