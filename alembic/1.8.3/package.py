@@ -23,9 +23,11 @@ def variants():
         return [ast.literal_eval(cook_variant)]
     else:
         # Otherwise tell rez-cook what variants we are capable of building
-        return [
-            ["platform-linux", "arch-x86_64", "cxx11abi", "cfg"],
-            ["platform-windows", "arch-AMD64", "vs", "cfg"],
+        req = ["cfg", "imath-3"]
+        return [x + req for x in [
+                ["platform-linux", "arch-x86_64", "cxx11abi"],
+                ["platform-windows", "arch-AMD64", "vs"],
+            ]
         ]
 
 

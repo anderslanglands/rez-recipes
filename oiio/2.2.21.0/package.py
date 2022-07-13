@@ -1,5 +1,5 @@
 name = "oiio"
-version = "2.4.1.1"
+version = "2.2.21.0"
 
 requires = [
     "boost-1.70+",
@@ -18,6 +18,8 @@ requires = [
     "gif-5.2.1",
     "tbb",
 ]
+
+hashed_variants = True
 
 
 @early()
@@ -40,9 +42,11 @@ def variants():
         return [ast.literal_eval(cook_variant)]
     else:
         # Otherwise tell rez-cook what variants we are capable of building
-        return [
-            ["platform-linux", "arch-x86_64", "cxx11abi", "python", "cfg"],
-            ["platform-windows", "arch-AMD64", "vs", "python", "cfg"],
+        req = ["cfg", "boost", "tbb", "openexr", "ocio", "python", "ptex"]
+        return [x + req for x in [
+                ["platform-linux", "arch-x86_64", "cxx11abi"],
+                ["platform-windows", "arch-AMD64", "vs"],
+            ]
         ]
 
 
@@ -72,7 +76,6 @@ def commands():
     env.OPENIMAGEIO_LOCATION = "{root}"
     env.CMAKE_PREFIX_PATH.append("{root}")
     env.PATH.prepend("{root}/bin")
-    env.OIIO_LOAD_DLLS_FROM_PATH="1"
 
     env.PYTHONPATH.prepend(f"{{root}}/lib/python{envvar('PYTHON_MAJMIN_VERSION')}/site-packages")
 
@@ -104,6 +107,7 @@ build_command = (
 
 
 def pre_cook():
-    fetch_repository(
-        f"https://github.com/anderslanglands/oiio"
+    archive = f"v{version}.tar.gz"
+    download_and_unpack(
+        f"https://github.com/OpenImageIO/oiio/archive/refs/tags/{archive}"
     )

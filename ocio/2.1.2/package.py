@@ -3,6 +3,8 @@ version = "2.1.2"
 
 requires = ["openexr-2.4|3.1.2+", "python-3.7+"]
 
+hashed_variants = True
+
 
 @early()
 def build_requires():
@@ -24,9 +26,11 @@ def variants():
         return [ast.literal_eval(cook_variant)]
     else:
         # Otherwise tell rez-cook what variants we are capable of building
-        return [
-            ["platform-linux", "arch-x86_64", "cxx11abi", "python", "cfg"],
-            ["platform-windows", "arch-AMD64", "vs", "python", "cfg"],
+        req = ["cfg", "openexr", "python"]
+        return [x + req for x in [
+                ["platform-linux", "arch-x86_64", "cxx11abi"],
+                ["platform-windows", "arch-AMD64", "vs"],
+            ]
         ]
 
 

@@ -3,7 +3,6 @@ version = "1.79.0"
 
 requires = ["python"]
 
-
 @early()
 def build_requires():
     import platform

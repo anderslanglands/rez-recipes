@@ -3,7 +3,6 @@ version = "1.70.0"
 
 requires = ["python<3.8"]
 
-
 @early()
 def build_requires():
     import platform

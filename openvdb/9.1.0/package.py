@@ -3,6 +3,8 @@ version = "9.1.0"
 
 requires = ["openexr", "zlib", "boost-1.70+", "tbb", "python", "numpy", "blosc-1.5+"]
 
+hashed_variants = True
+
 def commands():
     env.OpenVDB_ROOT = "{root}"
     env.CMAKE_PREFIX_PATH.append("{root}")
@@ -35,9 +37,11 @@ def variants():
         return [ast.literal_eval(cook_variant)]
     else:
         # Otherwise tell rez-cook what variants we are capable of building
-        return [
-            ["platform-linux", "arch-x86_64", "cxx11abi", "python", "cfg"],
-            ["platform-windows", "arch-AMD64", "vs", "python", "cfg"],
+        req = ["cfg", "boost", "tbb", "openexr", "python"]
+        return [x + req for x in [
+                ["platform-linux", "arch-x86_64", "cxx11abi"],
+                ["platform-windows", "arch-AMD64", "vs"],
+            ]
         ]
 
 def env(var: str):
