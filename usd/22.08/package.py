@@ -1,5 +1,5 @@
 name = "usd"
-version = "22.05"
+version = "22.08"
 
 requires = [
     "openexr-3",
@@ -16,8 +16,8 @@ requires = [
     "python",
 ]
 
-hashed_variants = True
 
+hashed_variants = True
 
 @early()
 def build_requires():
@@ -39,7 +39,7 @@ def variants():
         return [ast.literal_eval(cook_variant)]
     else:
         # Otherwise tell rez-cook what variants we are capable of building
-        req = ["cfg", "boost", "tbb", "openexr", "ocio", "oiio", "python", "osd", "ptex"]
+        req = ["cfg", "boost", "tbb", "openexr", "ocio", "oiio", "python", "ptex", "osd"]
         return [x + req for x in [
                 ["platform-linux", "arch-x86_64", "cxx11abi"],
                 ["platform-windows", "arch-AMD64", "vs"],
@@ -85,9 +85,10 @@ config_args = [
     f'-DPython_ROOT="{env("Python_ROOT")}"',
     "-DPXR_BUILD_DOCUMENTATION=FALSE",
     "-DPXR_BUILD_TESTS=FALSE",
+    "-DPXR_USE_PYTHON_3=ON",
     # Fix for boost inserting the wrong library names into the libs with 
     # --layout=system...
-    f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB {env("CXXFLAGS")}"',
+    f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H-DBOOST_BIND_GLOBAL_PLACEHOLDERS -Wno-class-memaccess {env("CXXFLAGS")}"',
     " -G Ninja",
 ]
 
@@ -98,6 +99,6 @@ build_command = (
 
 
 def pre_cook():
-    fetch_repository(
-        "https://github.com/PixarAnimationStudios/USD.git", branch=f"v{version}"
+    download_and_unpack(
+        f"https://github.com/PixarAnimationStudios/USD/archive/refs/tags/v{version}.tar.gz"
     )
