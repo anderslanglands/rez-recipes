@@ -88,9 +88,17 @@ config_args = [
     "-DPXR_USE_PYTHON_3=ON",
     # Fix for boost inserting the wrong library names into the libs with 
     # --layout=system...
-    f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H-DBOOST_BIND_GLOBAL_PLACEHOLDERS -Wno-class-memaccess {env("CXXFLAGS")}"',
+    f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H -DBOOST_BIND_GLOBAL_PLACEHOLDERS -Wno-class-memaccess {env("CXXFLAGS")}"',
     " -G Ninja",
 ]
+
+import platform
+
+if platform.system() == "Linux":
+    config_args.append(f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H -DBOOST_BIND_GLOBAL_PLACEHOLDERS -Wno-class-memaccess {env("CXXFLAGS")}"')
+else:
+    config_args.append(f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H -DBOOST_BIND_GLOBAL_PLACEHOLDERS {env("CXXFLAGS")}"')
+
 
 build_command = (
     " ".join(config_args)
