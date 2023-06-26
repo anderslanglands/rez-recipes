@@ -50,6 +50,7 @@ config_args = [
     "-DCMAKE_INSTALL_PREFIX={install_path}",
     f'-DCMAKE_MODULE_PATH="{env("CMAKE_MODULE_PATH")}"',
     f'-DCMAKE_BUILD_TYPE="{env("REZ_BUILD_CONFIG")}"',
+    "-DBUILD_SHARED_LIBS=OFF",
     " -G Ninja",
 ]
 
