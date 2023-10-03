@@ -1,5 +1,5 @@
 name = "usd"
-version = "22.08"
+version = "23.08"
 
 requires = [
     "openexr-3",
@@ -83,6 +83,8 @@ config_args = [
     f'-DOIIO_LOCATION="{env("OpenImageIO_ROOT")}"',
     f'-DBOOST_ROOT="{env("Boost_ROOT")}"',
     f'-DPython_ROOT="{env("Python_ROOT")}"',
+    f'-DPython3_ROOT_DIR="{env("Python_ROOT")}"',
+    f'-DPython_EXECUTABLE="{env("Python_EXECUTABLE")}"',
     "-DPXR_BUILD_DOCUMENTATION=FALSE",
     "-DPXR_BUILD_TESTS=FALSE",
     "-DPXR_BUILD_EXAMPLES=FALSE",
