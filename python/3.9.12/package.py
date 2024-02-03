@@ -74,7 +74,7 @@ def build_command():
             ./configure  --prefix=$REZ_BUILD_INSTALL_PATH \
                 --enable-optimizations --enable-ipv6 --enable-shared \
                 --with-dbmliborder=gdbm:ndbm:bdb --with-system-expat \
-                --with-system-ffi --with-ensurepip --with-computed-gotos=yes --with-ssl --with-pydebug && \
+                --with-system-ffi --with-ensurepip --with-computed-gotos=yes --with-ssl && \
             make install -j$REZ_BUILD_THREAD_COUNT && \
             ln -s $REZ_BUILD_INSTALL_PATH/bin/python3 $REZ_BUILD_INSTALL_PATH/bin/python
             """
