@@ -5,8 +5,8 @@ requires = [
     "openexr-3",
     "boost-1.70+",
     "ocio-2",
-    "oiio-2.3",
-    "osd-3.4",
+    "oiio-2.5",
+    "osd-3.5",
     "tbb-2020",
     "glew-2.1",
     "jinja2-3.1",
@@ -90,7 +90,8 @@ config_args = [
     "-DPXR_BUILD_TESTS=FALSE",
     "-DPXR_BUILD_EXAMPLES=FALSE",
     "-DPXR_USE_PYTHON_3=ON",
-    # Fix for boost inserting the wrong library names into the libs with 
+    "-DCMAKE_CXX_STANDARD=17",
+    # Fix for boost inserting the wrong library names into the libs with
     # --layout=system...
     f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H -DBOOST_BIND_GLOBAL_PLACEHOLDERS -Wno-class-memaccess {env("CXXFLAGS")}"',
     " -G Ninja",
