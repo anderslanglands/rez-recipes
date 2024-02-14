@@ -92,6 +92,7 @@ config_args = [
     "-DCMAKE_INSTALL_PREFIX={install_path}",
     f'-DCMAKE_MODULE_PATH="{env("CMAKE_MODULE_PATH")}"',
     f'-DCMAKE_BUILD_TYPE="{env("REZ_BUILD_CONFIG")}"',
+    "-DCMAKE_CXX_STANDARD=17",
     "-DBUILD_DOCS=OFF",
     "-DOIIO_BUILD_TESTS=OFF",
     "-DBUILD_TESTING=OFF",
