@@ -6,7 +6,7 @@ requires = [
     "boost-1.70+",
     "ocio-2",
     "oiio-2.3",
-    "osd-3.4",
+    "osd-3.6",
     "tbb-2020",
     "glew-2.1",
     "jinja2-3.1",
