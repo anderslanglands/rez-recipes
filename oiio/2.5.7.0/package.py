@@ -11,7 +11,7 @@ requires = [
     "png-1.6",
     "raw-0.21",
     "python",
-    "pybind11-2.8",
+    "pybind11-2",
     "webp-1.1",
     "zlib-1.2",
     "ptex-2.4",
