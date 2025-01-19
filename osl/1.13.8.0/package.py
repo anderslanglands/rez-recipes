@@ -76,6 +76,9 @@ config_args = [
     f'-DCMAKE_MODULE_PATH="{env("CMAKE_MODULE_PATH")}"',
     f'-DCMAKE_BUILD_TYPE="{env("REZ_BUILD_CONFIG")}"',
     "-DCMAKE_CXX_STANDARD=17",
+    # "-DCMAKE_CXX_FLAGS=-I/usr/include/c++/11/",
+    # "-DLLVM_COMPILE_FLAGS=-I/usr/include/c++/11;-I/usr/include/x86_64-linux-gnu/c++/11",
+    "-DUSE_LLVM_BITCODE=OFF",
     " -G Ninja",
 ]
 
