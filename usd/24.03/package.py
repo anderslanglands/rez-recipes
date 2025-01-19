@@ -5,12 +5,12 @@ requires = [
     "openexr-3",
     "boost-1.70+",
     "ocio-2",
-    "oiio-2.3",
-    "osd-3.6",
+    "oiio-2",
+    "osd-3.4+",
     "tbb-2020",
     "glew-2.1",
     "jinja2-3.1",
-    "pyside2-5.15",
+    "pyside6",
     "pyopengl-3.1",
     "numpy",
     "python",
@@ -112,4 +112,6 @@ build_command = (
 
 
 def pre_cook():
-    fetch_repository("https://github.com/PixarAnimationStudios/OpenUSD.git", branch="dev")
+    download_and_unpack(
+        f"https://github.com/PixarAnimationStudios/USD/archive/refs/tags/v{version}.tar.gz"
+    )
