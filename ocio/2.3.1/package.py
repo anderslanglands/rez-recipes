@@ -67,6 +67,7 @@ config_args = [
     f'-DPython_EXECUTABLE={env("Python_EXECUTABLE")}',
     "-DOCIO_BUILD_TESTS=OFF",
     "-DOCIO_BUILD_GPU_TESTS=OFF",
+    "-DOCIO_INSTALL_EXT_PACKAGES=ALL",
     " -G Ninja",
 ]
 
