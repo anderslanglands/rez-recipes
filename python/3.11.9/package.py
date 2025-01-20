@@ -1,5 +1,5 @@
 name = "python"
-version = "3.9.12"
+version = "3.11.9"
 
 
 @early()
@@ -36,16 +36,16 @@ def commands():
 
     env.PYTHON_VERSION = "{version}"
     env.PYTHON_MAJMIN_VERSION = ".".join(f"{version}".split(".")[:2])
-    
+
     if platform.system() == "Windows":
         env.PATH.append("{root}")
-        env.PYTHONPATH.prepend("{root}")
+        env.PYTHONPATH = "{root}"
         env.Python_EXECUTABLE = "{root}/python.exe"
     else:
         env.PATH.append("{root}/bin")
         env.LD_LIBRARY_PATH.prepend("{root}/lib")
         env.Python_EXECUTABLE = "{root}/bin/python3"
-        env.PYTHONPATH.prepend("{root}/lib/python3.9")
+        env.PYTHONPATH = "{root}/lib/python3.11"
 
 
 def pre_cook():
@@ -53,7 +53,7 @@ def pre_cook():
 
     if platform.system() == "Windows":
         download_and_unpack(
-            f"https://github.com/anderslanglands/rez-recipes/releases/download/python-3.7.9-3.9.12/python-{version}.zip",
+            f"https://github.com/anderslanglands/rez-recipes/releases/download/python-{version}/python-{version}.zip",
             move_up=False,
         )
     else:
@@ -73,7 +73,7 @@ def build_command():
             cd $REZ_BUILD_SOURCE_PATH && \
             ./configure  --prefix=$REZ_BUILD_INSTALL_PATH \
                 --enable-optimizations --enable-ipv6 --enable-shared \
-                --with-dbmliborder=gdbm:ndbm:bdb --with-system-expat \
+                --with-dbmliborder=gdbm:ndbm:bdb \
                 --with-system-ffi --with-ensurepip --with-computed-gotos=yes --with-ssl && \
             make install -j$REZ_BUILD_THREAD_COUNT && \
             ln -s $REZ_BUILD_INSTALL_PATH/bin/python3 $REZ_BUILD_INSTALL_PATH/bin/python

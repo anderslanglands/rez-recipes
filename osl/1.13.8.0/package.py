@@ -1,8 +1,9 @@
-name = "otio"
-version = "0.16"
+name = "osl"
+version = "1.13.8.0"
 
 requires = [
-    "python",
+    "oiio",
+    "llvm",
 ]
 
 hashed_variants = True
@@ -13,9 +14,9 @@ def build_requires():
     import platform
 
     if platform.system() == "Windows":
-        return ["cmake-3.18+", "vs"]
+        return ["cmake", "vs"]
     else:
-        return ["cmake-3.18+"]
+        return ["cmake"]
 
 
 @early()
@@ -28,7 +29,7 @@ def variants():
         return [ast.literal_eval(cook_variant)]
     else:
         # Otherwise tell rez-cook what variants we are capable of building
-        req = ["cfg", "python"]
+        req = ["oiio", "llvm"]
         return [x + req for x in [
                 ["platform-linux", "arch-x86_64", "cxx11abi"],
                 ["platform-windows", "arch-AMD64", "vs"],
@@ -46,8 +47,6 @@ def env(var: str):
 
 
 def commands():
-    import os
-
     def envvar(var: str):
         import platform
 
@@ -56,18 +55,17 @@ def commands():
         else:
             return f"${var}"
 
-    env.OTIO_ROOT = "{root}"
+    env.OpenShadingLanguage_ROOT = "{root}"
+    env.OSL_ROOT = "{root}"
     env.CMAKE_PREFIX_PATH.append("{root}")
-    env.CMAKE_PREFIX_PATH.append("{root}/share")
+    env.PATH.prepend("{root}/bin")
 
-    env.PYTHONPATH.prepend(f"{{root}}/python")
+    env.PYTHONPATH.prepend(f"{{root}}/lib/python{envvar('PYTHON_MAJMIN_VERSION')}/site-packages")
 
     import platform
 
     if platform.system() == "Linux":
-        # Shared libraries get put in the python installation for reasons (python-3.8 idiocy?)
-        env.LD_LIBRARY_PATH.prepend("{root}/python/opentimelineio")
-        env.LD_LIBRARY_PATH.prepend("{root}/python/opentime")
+        env.LD_LIBRARY_PATH.prepend("{root}/lib")
 
 
 
@@ -77,7 +75,10 @@ config_args = [
     "-DCMAKE_INSTALL_PREFIX={install_path}",
     f'-DCMAKE_MODULE_PATH="{env("CMAKE_MODULE_PATH")}"',
     f'-DCMAKE_BUILD_TYPE="{env("REZ_BUILD_CONFIG")}"',
-    "-DOTIO_PYTHON_INSTALL=ON",
+    "-DCMAKE_CXX_STANDARD=17",
+    # "-DCMAKE_CXX_FLAGS=-I/usr/include/c++/11/",
+    # "-DLLVM_COMPILE_FLAGS=-I/usr/include/c++/11;-I/usr/include/x86_64-linux-gnu/c++/11",
+    "-DUSE_LLVM_BITCODE=OFF",
     " -G Ninja",
 ]
 
@@ -88,5 +89,7 @@ build_command = (
 
 
 def pre_cook():
-    fetch_repository("https://github.com/anderslanglands/OpenTimelineIO.git")
+    download_and_unpack(
+        f"https://github.com/AcademySoftwareFoundation/OpenShadingLanguage/archive/refs/tags/v{version}.tar.gz"
+    )
 

@@ -87,6 +87,7 @@ config_args = [
     "-DPXR_BUILD_TESTS=FALSE",
     "-DPXR_BUILD_EXAMPLES=FALSE",
     "-DPXR_USE_PYTHON_3=ON",
+    "-DCMAKE_CXX_STANDARD=17",
     # Fix for boost inserting the wrong library names into the libs with 
     # --layout=system...
     f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H -DBOOST_BIND_GLOBAL_PLACEHOLDERS -Wno-class-memaccess {env("CXXFLAGS")}"',

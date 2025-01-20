@@ -1,12 +1,12 @@
 name = "usd"
-version = "23.08"
+version = "23.11"
 
 requires = [
     "openexr-3",
     "boost-1.70+",
     "ocio-2",
-    "oiio-2.5",
-    "osd-3.5",
+    "oiio-2.3",
+    "osd-3.6",
     "tbb-2020",
     "glew-2.1",
     "jinja2-3.1",
@@ -91,7 +91,7 @@ config_args = [
     "-DPXR_BUILD_EXAMPLES=FALSE",
     "-DPXR_USE_PYTHON_3=ON",
     "-DCMAKE_CXX_STANDARD=17",
-    # Fix for boost inserting the wrong library names into the libs with
+    # Fix for boost inserting the wrong library names into the libs with 
     # --layout=system...
     f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H -DBOOST_BIND_GLOBAL_PLACEHOLDERS -Wno-class-memaccess {env("CXXFLAGS")}"',
     " -G Ninja",

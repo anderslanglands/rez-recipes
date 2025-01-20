@@ -1,5 +1,5 @@
 name = "oiio"
-version = "2.3.16.0"
+version = "2.5.7.0"
 
 requires = [
     "boost-1.70+",
@@ -60,8 +60,6 @@ def env(var: str):
 
 
 def commands():
-    import os
-
     def envvar(var: str):
         import platform
 
@@ -92,10 +90,10 @@ config_args = [
     "-DCMAKE_INSTALL_PREFIX={install_path}",
     f'-DCMAKE_MODULE_PATH="{env("CMAKE_MODULE_PATH")}"',
     f'-DCMAKE_BUILD_TYPE="{env("REZ_BUILD_CONFIG")}"',
-    "-DCMAKE_CXX_STANDARD=17",
     "-DBUILD_DOCS=OFF",
     "-DOIIO_BUILD_TESTS=OFF",
     "-DBUILD_TESTING=OFF",
+    "-DCMAKE_CXX_STANDARD=17",
     f'-DPython_ROOT="{env("Python_ROOT")}"',
     f'-DPython_EXECUTABLE="{env("Python_EXECUTABLE")}"',
     " -G Ninja",

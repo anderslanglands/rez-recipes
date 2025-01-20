@@ -1,12 +1,12 @@
 name = "usd"
-version = "23.08"
+version = "21.08"
 
 requires = [
     "openexr-3",
     "boost-1.70+",
     "ocio-2",
-    "oiio-2.5",
-    "osd-3.5",
+    "oiio-2.3",
+    "osd-3.4",
     "tbb-2020",
     "glew-2.1",
     "jinja2-3.1",
@@ -57,7 +57,7 @@ def commands():
     import platform
 
     if platform.system() == "Linux":
-        env.LD_LIBRARY_PATH.prepend("{root}/lib")
+        env.LD_LIBRARY_PATH.prepend("{root}/bin")
         env.PYOPENGL_PLATFORM = "glx"
 
 
@@ -83,27 +83,13 @@ config_args = [
     f'-DOIIO_LOCATION="{env("OpenImageIO_ROOT")}"',
     f'-DBOOST_ROOT="{env("Boost_ROOT")}"',
     f'-DPython_ROOT="{env("Python_ROOT")}"',
-    f'-DPython3_ROOT="{env("Python_ROOT")}"',
-    f'-DPython_EXECUTABLE="{env("Python_EXECUTABLE")}"',
-    f'-DPython3_EXECUTABLE="{env("Python_EXECUTABLE")}"',
     "-DPXR_BUILD_DOCUMENTATION=FALSE",
     "-DPXR_BUILD_TESTS=FALSE",
-    "-DPXR_BUILD_EXAMPLES=FALSE",
-    "-DPXR_USE_PYTHON_3=ON",
-    "-DCMAKE_CXX_STANDARD=17",
-    # Fix for boost inserting the wrong library names into the libs with
+    # Fix for boost inserting the wrong library names into the libs with 
     # --layout=system...
-    f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H -DBOOST_BIND_GLOBAL_PLACEHOLDERS -Wno-class-memaccess {env("CXXFLAGS")}"',
+    f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB {env("CXXFLAGS")}"',
     " -G Ninja",
 ]
-
-import platform
-
-if platform.system() == "Linux":
-    config_args.append(f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H -DBOOST_BIND_GLOBAL_PLACEHOLDERS -Wno-class-memaccess {env("CXXFLAGS")}"')
-else:
-    config_args.append(f'-DCMAKE_CXX_FLAGS="-DBOOST_ALL_NO_LIB -D__TBB_show_deprecation_message_task_H -DBOOST_BIND_GLOBAL_PLACEHOLDERS {env("CXXFLAGS")}"')
-
 
 build_command = (
     " ".join(config_args)

@@ -1,21 +1,21 @@
 name = "vfxrp"
-version = "2023"
+version = "2024"
 
 
 @early()
 def requires():
     req = [
-        "python-3.10",
-        "pyqt5-5.15",
-        "pyside2-5.15",
-        "numpy-1.23",
-        "openexr-3.1",
+        "python-3.11",
+        "pyqt5-6.5",
+        "pyside2-6.5",
+        "numpy-1.24",
+        "openexr-3.2",
         "ptex-2.4",
-        "osd-3.5",
-        "openvdb-10",
+        "osd-3.6",
+        "openvdb-11",
         "alembic-1.8",
-        "ocio-2.2",
-        "boost-1.80",
+        "ocio-2.3",
+        "boost-1.82",
         "tbb-2020.3",
     ]
 
