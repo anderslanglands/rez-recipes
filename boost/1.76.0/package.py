@@ -45,7 +45,7 @@ def commands():
 
 def pre_cook():
     download_and_unpack(
-        f"https://boostorg.jfrog.io/artifactory/main/release/{version}/source/boost_{version.replace('.', '_')}.tar.bz2",
+        f"https://archives.boost.io/release/{version}/source/boost_{version.replace('.', '_')}.tar.bz2",
     )
 
 
