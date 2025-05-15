@@ -1,5 +1,5 @@
 name = "openexr"
-version = "3.1.5"
+version = "3.3.2"
 
 requires = ["imath-3.1", "zlib-1.2"]
 
@@ -30,7 +30,7 @@ def variants():
 
 
 def commands():
-    import platform 
+    import platform
 
     env.OPENEXR_ROOT = "{root}"
     env.OPENEXR_HOME = "{root}"
@@ -42,6 +42,7 @@ def commands():
     if platform.system() == "Linux":
         env.LD_LIBRARY_PATH.prepend("{root}/lib")
 
+
 def env(var: str):
     import platform
     if platform.system() == "Windows":
@@ -49,13 +50,13 @@ def env(var: str):
     else:
         return f"${var}"
 
+
 config_args = [
     "cmake",
     "{root}",
     "-DCMAKE_INSTALL_PREFIX={install_path}",
     f'-DCMAKE_MODULE_PATH="{env("CMAKE_MODULE_PATH")}"',
     f'-DCMAKE_BUILD_TYPE="{env("REZ_BUILD_CONFIG")}"',
-    "-DCMAKE_CXX_STANDARD=17",
     " -G Ninja",
 ]
 

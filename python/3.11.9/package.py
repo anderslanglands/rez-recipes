@@ -72,7 +72,7 @@ def build_command():
         return f"""
             cd $REZ_BUILD_SOURCE_PATH && \
             ./configure  --prefix=$REZ_BUILD_INSTALL_PATH \
-                --enable-optimizations --enable-ipv6 --enable-shared \
+                --enable-ipv6 --enable-shared \
                 --with-dbmliborder=gdbm:ndbm:bdb \
                 --with-system-ffi --with-ensurepip --with-computed-gotos=yes --with-ssl && \
             make install -j$REZ_BUILD_THREAD_COUNT && \

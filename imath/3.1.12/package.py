@@ -1,7 +1,5 @@
-name = "openexr"
-version = "3.1.5"
-
-requires = ["imath-3.1", "zlib-1.2"]
+name = "imath"
+version = "3.1.12"
 
 @early()
 def build_requires():
@@ -30,12 +28,12 @@ def variants():
 
 
 def commands():
-    import platform 
+    import platform
 
-    env.OPENEXR_ROOT = "{root}"
-    env.OPENEXR_HOME = "{root}"
-    env.OPENEXR_DIR = "{root}"
-    env.OPENEXR_LOCATION = "{root}"
+    env.Imath_ROOT = "{root}"
+    env.IMATH_HOME = "{root}"
+    env.IMATH_DIR = "{root}"
+    env.IMATH_LOCATION = "{root}"
     env.CMAKE_PREFIX_PATH.append("{root}")
     env.PATH.prepend("{root}/bin")
 
@@ -64,6 +62,7 @@ build_command = (
     + f" && cmake --build . --target install --config {env('REZ_BUILD_CONFIG')}"
 )
 
-
 def pre_cook():
-    download_and_unpack(f"https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v{version}.tar.gz")
+    download_and_unpack(
+        f"https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v{version}.tar.gz"
+    )

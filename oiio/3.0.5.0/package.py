@@ -1,5 +1,5 @@
 name = "oiio"
-version = "2.5.7.0"
+version = "3.0.5.0"
 
 requires = [
     "boost-1.70+",
