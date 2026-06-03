@@ -1,7 +1,7 @@
 name = "materialx"
 version = "1.39.3"
 
-requires = ["python-3"]
+requires = ["python-3", "pybind11"]
 
 @early()
 def build_requires():
